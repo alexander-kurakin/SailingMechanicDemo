@@ -393,6 +393,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windPower: 15
   _windChangeInterval: 30
+  _minXborder: -500
+  _maxXborder: 0
+  _minZborder: 0
+  _maxZborder: 500
   _windVisual: {fileID: 219128928}
   _boat: {fileID: 1820878749}
   _centerOfTheWaterPlane: {x: -250, y: 0, z: 250}
@@ -1172,7 +1176,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1707525625466952, guid: beb162d963ca065489b61138f84de28d, type: 3}
       propertyPath: m_Name
-      value: SM_Icon_Arrow_Small_01
+      value: Arrow
       objectReference: {fileID: 0}
     - target: {fileID: 4868324791932714, guid: beb162d963ca065489b61138f84de28d, type: 3}
       propertyPath: m_LocalScale.x
@@ -1418,9 +1422,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSpeed: 100
   _rotationStep: 80
-  _leftSailAngle: 90
-  _rightSailAngle: 270
-  _sailTransform: {fileID: 28234725}
+  _leftSailAngle: -90
+  _rightSailAngle: 90
+  _gizmosRayLength: 2
+  _sailRotatableTransform: {fileID: 596345241}
   _sailRealDirectionTransform: {fileID: 1625158466}
   _infoText: {fileID: 1734792269}
 --- !u!65 &1820878752

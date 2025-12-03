@@ -6,12 +6,13 @@ public class Boat : MonoBehaviour
     private Wind _wind;
     private Rigidbody _rigidbody;
 
-    [SerializeField] private float _rotationSpeed;
-    [SerializeField] private float _rotationStep;
-    [SerializeField] private float _leftSailAngle;
-    [SerializeField] private float _rightSailAngle;
+    [SerializeField] private float _rotationSpeed = 100f;
+    [SerializeField] private float _rotationStep = 80f;
+    [SerializeField] private float _leftSailAngle = 90f;
+    [SerializeField] private float _rightSailAngle = 270f;
+    [SerializeField] private float _gizmosRayLength = 2f;
 
-    [SerializeField] private Transform _sailTransform;
+    [SerializeField] private Transform _sailRotatableTransform;
     [SerializeField] private Transform _sailRealDirectionTransform;
     [SerializeField] private TMP_Text _infoText;
 
@@ -38,7 +39,7 @@ public class Boat : MonoBehaviour
     private void ProcessWindMovement()
     {
         Vector3 boatDirection = transform.forward;
-        Vector3 windDirection = _wind.GetWindDirection();
+        Vector3 windDirection = _wind.GetNormalizedWindDirection();
         Vector3 sailDirection = _sailRealDirectionTransform.forward;
 
         float sailEffect = Vector3.Dot(sailDirection, windDirection);
@@ -52,7 +53,7 @@ public class Boat : MonoBehaviour
 
         _rigidbody.AddForce(boatSailingForce * Time.fixedDeltaTime, ForceMode.Force);
 
-        _infoText.text = $"Note: Red=Boat, Green=Sail, Cyan=Wind\n" +
+        _infoText.text = $"Red=Boat, Green=Sail, Cyan=Wind\n" +
                          $"Numbers:\n" +
                          $"Sail component: {sailEffect:F2}\n" +
                          $"Forward component: {forwardEffect:F2}\n" +
@@ -75,12 +76,12 @@ public class Boat : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            LocalRotateFixedAngles(_sailTransform, _leftSailAngle, _rotationStep);
+            LocalRotateFixedAngles(_sailRotatableTransform, _leftSailAngle, _rotationStep);
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            LocalRotateFixedAngles(_sailTransform, _rightSailAngle, _rotationStep);
+            LocalRotateFixedAngles(_sailRotatableTransform, _rightSailAngle, _rotationStep);
         }
     }
 
@@ -100,17 +101,15 @@ public class Boat : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * 5f);
+        Gizmos.DrawRay(transform.position, transform.forward * _gizmosRayLength);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(_sailRealDirectionTransform.position, _sailRealDirectionTransform.forward * 2f);
+        Gizmos.DrawRay(_sailRealDirectionTransform.position, _sailRealDirectionTransform.forward * _gizmosRayLength);
 
         if (_wind == null)
             return;
+
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(transform.position, transform.position + _wind.GetWindDirection() * 5f);
-
-
-
+        Gizmos.DrawLine(transform.position, transform.position + _wind.GetNormalizedWindDirection() * _gizmosRayLength);
     }
 }

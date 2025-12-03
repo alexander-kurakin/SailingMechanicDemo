@@ -14,7 +14,7 @@ public class WindVisual : MonoBehaviour
 
     private void Update()
     {
-        _arrowObject.transform.rotation = Quaternion.FromToRotation(_arrowObject.transform.up, _wind.GetWindDirection()) * _arrowObject.transform.rotation;
+        _arrowObject.transform.rotation = Quaternion.FromToRotation(_arrowObject.transform.up, _wind.GetNormalizedWindDirection()) * _arrowObject.transform.rotation;
         _arrowObject.transform.position = _boatObject.transform.position + new Vector3(2f, 1.5f, 0);
     }
 }
