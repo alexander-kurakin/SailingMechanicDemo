@@ -5,8 +5,6 @@ public class WindVisual : MonoBehaviour
     [SerializeField] private GameObject _arrowObject;
     [SerializeField] private GameObject _boatObject;
 
-    
-    private Vector3 _transformedWindDirection;
     private Wind _wind;
 
     public void Initialize(Wind wind)

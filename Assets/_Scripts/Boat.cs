@@ -42,20 +42,22 @@ public class Boat : MonoBehaviour
         Vector3 sailDirection = _sailRealDirectionTransform.forward;
 
         float sailEffect = Vector3.Dot(sailDirection, windDirection);
-        //sailEffect = Mathf.Clamp01(sailEffect);
+        sailEffect = Mathf.Clamp01(sailEffect);
 
         float forwardEffect = Vector3.Dot(windDirection, boatDirection);
-        //forwardEffect = Mathf.Clamp01(forwardEffect);
+        forwardEffect = Mathf.Clamp01(forwardEffect);
 
         float windPower = sailEffect * forwardEffect * _wind.GetWindSpeed();
         Vector3 boatSailingForce = boatDirection * windPower;
 
         _rigidbody.AddForce(boatSailingForce * Time.fixedDeltaTime, ForceMode.Force);
 
-        _infoText.text = $"Sail Effect: {sailEffect:F2}\n" +
-                         $"Forward Effect: {forwardEffect:F2}\n" +
-                         $"Wind Power: {windPower:F2}\n" +
-                         $"Boat Force: {boatSailingForce.magnitude:F2}";
+        _infoText.text = $"Note: Red=Boat, Green=Sail, Cyan=Wind\n" +
+                         $"Numbers:\n" +
+                         $"Sail component: {sailEffect:F2}\n" +
+                         $"Forward component: {forwardEffect:F2}\n" +
+                         $"Wind result speed: {windPower:F2}\n" +
+                         $"Boat Position: {transform.position:F2}";
 
     }
 
